@@ -80,7 +80,11 @@ body {
     display: inline-block;
 }
 
-.quiz-box .question-number, .quiz-box .question-text, .quiz-box .option-container, .quiz-box .next-question-btn, .quiz-box .answer-indicator {
+.quiz-box .question-number, 
+.quiz-box .question-text, 
+.quiz-box .option-container, 
+.quiz-box .next-question-btn, 
+.quiz-box .answer-indicator {
     width: 100%;
     float: left;
 }
