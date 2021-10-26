@@ -17,7 +17,7 @@ body {
 .custom-box {
     max-width: 700px;
     background-color: white;
-    margin: 40px auto;
+    margin: 50px auto;
     padding: 30px;
     border-radius: 10px;
     animation: fadeInRight 1s ease;

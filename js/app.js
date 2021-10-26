@@ -71,11 +71,14 @@ function answer(value, score) {
 }
 
 function unclickableOption() {
-    const optionLen = optionContainer.children.length;
-    for (let i = 0; i < optionLen; i++) {
-        optionContainer.children[i].classList.add("already-answered");
-    }
+  if (answer == 1) {
+    optionContainer.style.pointerEvents = "none";
+  }
 }
+
+//ini untuk alert sukses masukin jawaban pake bootstrap
+// var myAlert = document.getElementById("myAlert");
+// myAlert.style.display = "none";
 
 function next() {
   if (questionCounter === quiz.length) {
@@ -99,10 +102,11 @@ function quizResult() {
   if (totalScore >= 0 && totalScore <= 3) {
     console.log("Stress Tingkat Rendah");
     resultBoX.querySelector(".description").innerHTML = "Stress Tingkat Rendah ";
-  } else if (totalScore >= 4 && totalScore <= 6) {
+  } else if (totalScore >= 3.5 && totalScore <= 6) {
     resultBoX.querySelector(".description").innerHTML = "Stress Tingkat Sedang";
-    // } else (totalScore >= 7 && totalScore <= 10){
-    //   resultBoX.querySelector(."description").innerHTML = "Stress Tingkat Tinggi"
+  }
+  else if (totalScore >= 6.5 && totalScore <= 10) {
+    resultBoX.querySelector(."description").innerHTML = "Stress Tingkat Tinggi"
   }
 }
 
@@ -111,6 +115,8 @@ function goToHome() {
   homeBox.classList.remove("hide");
   resetQuiz();
 }
+
+
 
 // ### STARTING POINT ####
 function startQuiz() {
