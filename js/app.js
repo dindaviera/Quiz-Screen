@@ -11,6 +11,7 @@ let availableQuestions = [];
 let availableOptions = [];
 let answerList = [];
 let totalScore = 0;
+let answered = false;
 
 function setAvailableQuestions() {
   const totalQuestion = quiz.length;
@@ -53,18 +54,48 @@ function getNewQuestion() {
   questionCounter++;
 }
 
-function answer(value, score) {
-  answerList.push({
-    ans: value,
-    scr: score,
-  });
-  totalScore = totalScore + score;
+function answer(value, score, id) {
+  if (answered) {
+    document.getElementById("option1").style.backgroundColor = "#E5E5E5";
+    document.getElementById("option2").style.backgroundColor = "#E5E5E5";
+    document.getElementById("option3").style.backgroundColor = "#E5E5E5";
+    document.getElementById("option4").style.backgroundColor = "#E5E5E5";
+
+    answerList.splice(
+      answerList.findIndex((element) => {
+        element.value == value;
+      }, 1)
+    );
+
+    document.getElementById(id).style.backgroundColor = "green";
+
+    answerList.push({
+      ans: value,
+      scr: score,
+    });
+  } else {
+    console.log(id);
+    document.getElementById("option1");
+    document.getElementById(id).style.backgroundColor = "green";
+    answerList.push({
+      ans: value,
+      scr: score,
+    });
+    totalScore = totalScore + score;
+    questionCounter++;
+    answered = true;
+  }
+
   console.log(answerList);
-  questionCounter++;
-  console.log(score);
 }
 
 function next() {
+  answered = false;
+  document.getElementById("option1").style.backgroundColor = "#E5E5E5";
+  document.getElementById("option2").style.backgroundColor = "#E5E5E5";
+  document.getElementById("option3").style.backgroundColor = "#E5E5E5";
+  document.getElementById("option4").style.backgroundColor = "#E5E5E5";
+
   if (questionCounter === quiz.length) {
     quizOver();
   } else {
@@ -88,7 +119,7 @@ function quizResult() {
   } else if (totalScore >= 4 && totalScore <= 6.5) {
     resultBoX.querySelector(".description").innerHTML = "Stress Tingkat Sedang";
   } else if (totalScore >= 7 && totalScore <= 10) {
-    resultBoX.querySelector(".description").innerHTML = "Stress Tingkat Tinggi"
+    resultBoX.querySelector(".description").innerHTML = "Stress Tingkat Tinggi";
   }
 }
 
