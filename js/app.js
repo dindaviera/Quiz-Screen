@@ -1,7 +1,6 @@
 const questionNumber = document.querySelector(".question-number");
 const questionText = document.querySelector(".question-text");
 const questionContainer = document.querySelector(".option-container");
-const answerIndicatorContainer = document.querySelector(".answer-indicator");
 const homeBox = document.querySelector(".home-box");
 const quizBox = document.querySelector(".quiz-box");
 const resultBoX = document.querySelector(".result-box");
@@ -10,7 +9,6 @@ let questionCounter = 0;
 let currentQuestion;
 let availableQuestions = [];
 let availableOptions = [];
-let correctAnswers = 0;
 let answerList = [];
 let totalScore = 0;
 
@@ -23,24 +21,21 @@ function setAvailableQuestions() {
 
 function getNewQuestion() {
   questionNumber.innerHTML =
-    "Question " + (questionCounter + 1) + " of " + quiz.length;
+    "Pertanyaan " + (questionCounter + 1) + " dari " + quiz.length;
 
   const questionIndex =
     availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
   currentQuestion = questionIndex;
   questionText.innerHTML = currentQuestion.q;
   const index1 = availableQuestions.indexOf(questionIndex);
-
   availableQuestions.splice(index1, 1);
 
- 
   const optionLen = currentQuestion.options.length;
   for (let i = 0; i < optionLen; i++) {
     availableOptions.push(i);
   }
-  optionContainer.innerHTML = "";
+
   let animationDelay = 0.15;
-  
   for (let i = 0; i < optionLen; i++) {
     const optionIndex =
       availableOptions[Math.floor(Math.random() * availableOptions.length)];
@@ -55,7 +50,6 @@ function getNewQuestion() {
     optionContainer.appendChild(option);
     option.setAttribute("onclick", "getResult(this)");
   }
-
   questionCounter++;
 }
 
@@ -69,16 +63,6 @@ function answer(value, score) {
   questionCounter++;
   console.log(score);
 }
-
-function unclickableOption() {
-  if (answer == 1) {
-    optionContainer.style.pointerEvents = "none";
-  }
-}
-
-//ini untuk alert sukses masukin jawaban pake bootstrap
-// var myAlert = document.getElementById("myAlert");
-// myAlert.style.display = "none";
 
 function next() {
   if (questionCounter === quiz.length) {
@@ -94,20 +78,31 @@ function quizOver() {
   quizResult();
 }
 
-
 function quizResult() {
   resultBoX.querySelector(".total-question").innerHTML = quiz.length;
   resultBoX.querySelector(".total-score").innerHTML = totalScore + " / " + 10;
   console.log(totalScore);
-  if (totalScore >= 0 && totalScore <= 3) {
-    console.log("Stress Tingkat Rendah");
-    resultBoX.querySelector(".description").innerHTML = "Stress Tingkat Rendah ";
-  } else if (totalScore >= 3.5 && totalScore <= 6) {
+  if (totalScore >= 0 && totalScore <= 3.5) {
+    console.log("rendah");
+    resultBoX.querySelector(".description").innerHTML = "Stress Tingkat Rendah";
+  } else if (totalScore >= 4 && totalScore <= 6.5) {
     resultBoX.querySelector(".description").innerHTML = "Stress Tingkat Sedang";
+  } else if (totalScore >= 7 && totalScore <= 10) {
+    resultBoX.querySelector(".description").innerHTML = "Stress Tingkat Tinggi"
   }
-  else if (totalScore >= 6.5 && totalScore <= 10) {
-    resultBoX.querySelector(."description").innerHTML = "Stress Tingkat Tinggi"
-  }
+}
+
+function resetQuiz() {
+  questionCounter = 0;
+  correctAnswers = 0;
+  attempt = 0;
+}
+
+function tryAgainqUIZ() {
+  resultBox.classList.add("hide");
+  quizBox.classList.remove("hide");
+  resetQuiz();
+  startQuIZ();
 }
 
 function goToHome() {
@@ -115,8 +110,6 @@ function goToHome() {
   homeBox.classList.remove("hide");
   resetQuiz();
 }
-
-
 
 // ### STARTING POINT ####
 function startQuiz() {
